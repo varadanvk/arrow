@@ -89,6 +89,7 @@ dependencies = [
  "candle-transformers",
  "nalgebra",
  "protobuf",
+ "rand 0.8.5",
  "rust-bert",
  "serde",
  "serde_json",
