@@ -39,7 +39,6 @@ impl VectorStore {
         for embedding in &self.embeddings {
             let similarity = self.cosine_similarity(embedding, query)?;
             if similarity > 0.8 {
-                // Threshold can be adjusted
                 results.push(embedding.clone());
             }
         }
