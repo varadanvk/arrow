@@ -5,16 +5,20 @@ use std::f32;
 
 pub struct VectorStore {
     embeddings: Vec<Tensor>,
+    texts: Vec<String>, // Store original texts
 }
 
 impl VectorStore {
     pub fn new() -> Self {
-        let embeddings = Vec::new();
-        VectorStore { embeddings }
+        VectorStore {
+            embeddings: Vec::new(),
+            texts: Vec::new(),
+        }
     }
 
-    pub fn add(&mut self, embedding: Tensor) {
+    pub fn add(&mut self, embedding: Tensor, text: String) {
         self.embeddings.push(embedding);
+        self.texts.push(text);
     }
 
     fn cosine_similarity(&self, embedding: &Tensor, query: &Tensor) -> Result<f32> {
@@ -34,14 +38,13 @@ impl VectorStore {
             .to_scalar::<f32>()
     }
 
-    pub fn query(&self, query: &Tensor) -> Result<Vec<Tensor>> {
+    pub fn query(&self, query_embedding: &Tensor) -> Result<Vec<(String, f32)>> {
         let mut results = Vec::new();
-        for embedding in &self.embeddings {
-            let similarity = self.cosine_similarity(embedding, query)?;
-            if similarity > 0.8 {
-                results.push(embedding.clone());
-            }
+        for (i, embedding) in self.embeddings.iter().enumerate() {
+            let similarity = self.cosine_similarity(embedding, query_embedding)?;
+            results.push((self.texts[i].clone(), similarity));
         }
+        results.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
         Ok(results)
     }
 }
