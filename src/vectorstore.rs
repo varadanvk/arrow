@@ -1,4 +1,3 @@
-// src/vectorstore.rs
 use crate::embedding::StoredEmbedding;
 use candle_core::{Device, Result, Tensor};
 use rand::Rng;
@@ -19,7 +18,6 @@ struct Node {
 #[derive(Serialize, Deserialize)]
 struct Layer {
     nodes: Vec<Node>,
-    // Map from UUID to index in the nodes vector for fast lookup
     id_to_index: HashMap<Uuid, usize>,
 }
 

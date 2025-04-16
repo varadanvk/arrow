@@ -151,7 +151,6 @@ impl Embeddor {
         self.convert_to_tensors(all_embeddings)
     }
 
-    // Helper function to convert embeddings to tensors
     fn convert_to_tensors(&self, embeddings: Vec<Vec<f32>>) -> Result<Vec<Tensor>> {
         let tensors = embeddings
             .iter()
