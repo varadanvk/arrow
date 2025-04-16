@@ -23,3 +23,4 @@ nalgebra = "0.32.3"
 rust-bert = "0.23.0"
 rand = "0.8.5"
 uuid = { version = "1.0", features = ["v4", "serde"] }
+clap = { version = "4.4", features = ["derive"] }
